@@ -158,7 +158,7 @@ docker run -p 5000:5000 hate-speech-detector
 
 ## 👨‍💻 Author
 
-**Sajal Srivastava**
+**Muskan Prajapati and Rishika Singh**
 
 📱 Contact: +91 8418034346 (WhatsApp)
 💬 For codebase understanding, support, or collaboration
@@ -166,3 +166,4 @@ docker run -p 5000:5000 hate-speech-detector
 ---
 
 **Made with ❤️ for a safer internet**
+
