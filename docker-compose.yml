@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  hate-speech-detector:
+    build: .
+    container_name: hate-speech-api
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - WORKERS=4
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - hate-speech-network
+
+networks:
+  hate-speech-network:
+    driver: bridge

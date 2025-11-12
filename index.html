@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Hate Speech Detector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="gradient-bg"></div>
+    
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>HateSpeech<strong>AI</strong></span>
+                </div>
+                <div class="nav-links">
+                    <a href="#home" class="active">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#models">Models</a>
+                    <a href="#stats">Statistics</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <h1 class="title">
+                    <span class="gradient-text">AI-Powered</span> Hate Speech Detection
+                </h1>
+                <p class="subtitle">
+                    Advanced machine learning models to identify and classify hate speech in real-time
+                </p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-brain"></i>
+                        <h3>Dual AI Models</h3>
+                        <p>Logistic Regression & BERT</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <h3>Real-time Analysis</h3>
+                        <p>Instant predictions</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>High Accuracy</h3>
+                        <p>85%+ confidence rate</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="detector-section">
+            <div class="detector-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-search"></i> Text Analysis</h2>
+                    <p>Enter text below to analyze for hate speech content</p>
+                </div>
+
+                <div class="input-section">
+                    <textarea 
+                        id="textInput" 
+                        placeholder="Enter text to analyze... (e.g., 'I hate all immigrants!' or 'I love everyone!')"
+                        rows="5"
+                    ></textarea>
+                    <div class="input-controls">
+                        <div class="char-count">
+                            <span id="charCount">0</span> / 500 characters
+                        </div>
+                        <div class="button-group">
+                            <button id="clearBtn" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Clear
+                            </button>
+                            <button id="analyzeBtn" class="btn btn-primary">
+                                <i class="fas fa-play"></i> Analyze Text
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Analyzing with AI models...</p>
+                </div>
+
+                <div id="resultsSection" class="results-section" style="display: none;">
+                    <h3 class="results-title">Analysis Results</h3>
+                    
+                    <div class="models-grid">
+                        <!-- Basic Model Results -->
+                        <div class="model-card basic-model">
+                            <div class="model-header">
+                                <i class="fas fa-robot"></i>
+                                <h4>Basic Model</h4>
+                                <span class="model-badge">Logistic Regression</span>
+                            </div>
+                            <div class="prediction-result">
+                                <div class="prediction-label" id="basicPrediction">
+                                    <i class="fas fa-spinner fa-spin"></i> Analyzing...
+                                </div>
+                                <div class="confidence-bar">
+                                    <div class="confidence-label">Confidence Score</div>
+                                    <div class="progress-bar">
+                                        <div id="basicProgress" class="progress-fill"></div>
+                                    </div>
+                                    <div class="confidence-value" id="basicConfidence">0%</div>
+                                </div>
+                            </div>
+                            <div class="model-stats">
+                                <div class="stat">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="basicTime">--ms</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Base Accuracy: 87%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Deep Model Results -->
+                        <div class="model-card deep-model">
+                            <div class="model-header">
+                                <i class="fas fa-brain"></i>
+                                <h4>Deep Model</h4>
+                                <span class="model-badge">RoBERTa BERT</span>
+                            </div>
+                            <div class="prediction-result">
+                                <div class="prediction-label" id="deepPrediction">
+                                    <i class="fas fa-spinner fa-spin"></i> Analyzing...
+                                </div>
+                                <div class="confidence-bar">
+                                    <div class="confidence-label">Confidence Score</div>
+                                    <div class="progress-bar">
+                                        <div id="deepProgress" class="progress-fill"></div>
+                                    </div>
+                                    <div class="confidence-value" id="deepConfidence">0%</div>
+                                </div>
+                            </div>
+                            <div class="model-stats">
+                                <div class="stat">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="deepTime">--ms</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>Base Accuracy: 91%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Consensus Section -->
+                    <div class="consensus-card" id="consensusCard">
+                        <div class="consensus-header">
+                            <i class="fas fa-balance-scale"></i>
+                            <h4>Final Verdict</h4>
+                        </div>
+                        <div class="consensus-content" id="consensusResult">
+                            <div class="consensus-result-main">
+                                <strong id="consensusLabel">Analyzing...</strong>
+                            </div>
+                        </div>
+                        <div class="consensus-meta" id="consensusMeta">
+                            <span id="consensusText">
+                                <i class="fas fa-info-circle"></i>
+                                Calculating consensus...
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Language Detection -->
+                    <div class="info-card" id="languageInfo">
+                        <i class="fas fa-language"></i>
+                        <span>Detected Language: <strong id="detectedLang">EN</strong></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="stats" class="stats-section">
+            <h2 class="section-title">Model Performance Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>87.3%</h3>
+                        <p>Basic Model Accuracy</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>91.5%</h3>
+                        <p>Deep Model Accuracy</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>25,000+</h3>
+                        <p>Training Samples</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3>&lt;200ms</h3>
+                        <p>Average Response Time</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="about-content">
+                <h2 class="section-title">About This Project</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>Dataset</h3>
+                        <p>Davidson's Twitter Hate Speech dataset containing ~25,000 annotated tweets for hate speech detection</p>
+                    </div>
+                    <div class="about-card">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Models</h3>
+                        <p>Combines traditional ML (Logistic Regression) with advanced transformer-based models (RoBERTa)</p>
+                    </div>
+                    <div class="about-card">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Purpose</h3>
+                        <p>Educational tool for understanding hate speech detection. Results may contain inherent biases</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 AI Hate Speech Detector | Educational Research Project</p>
+            <div class="footer-links">
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
